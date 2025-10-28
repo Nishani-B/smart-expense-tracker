@@ -4,57 +4,76 @@ A simple and user-friendly Python desktop application that helps you track incom
 
 🧩 Features
 
-✅ User Dashboard — Add, delete, and view all your transactions
-✅ Set Monthly Income — Manage or update your total monthly income
-✅ Add Transactions — Categorize entries as Income or Expense
-✅ Auto Summary Update — View total income, expenses, and balance instantly
-✅ Graph Visualization — Category-wise income and expense bar chart
-✅ Transaction Management — Auto-renumber IDs when a transaction is deleted
-✅ MySQL Integration — All data is stored securely in a MySQL database
+🏠 User Dashboard
 
+
+
+A clean, intuitive dashboard that acts as the control center of your Smart Budget Tracker.
+Users can seamlessly add, view, and delete transactions, while instantly viewing updates to their overall financial summary.
+
+💸 Set Monthly Income
+
+
+
+Allows each user to define or update their monthly income manually.
+This income value is used to calculate the total available balance dynamically after accounting for all transactions.
+
+📥 Add Transactions
+
+
+
+Users can easily add transactions by specifying:
+
+Type: Income or Expense
+Category: e.g., Food, Transportation, Entertainment, Textile, etc.
+Amount: Numeric value of the transaction
+Description: Optional note for better tracking
+Each new entry is stored in the MySQL database and immediately reflected on the dashboard.
+📊 Auto Summary Update
+
+
+
+The summary section automatically recalculates and displays:
+
+✅ Total Income (Base income + recorded income transactions)
+❌ Total Expense (Sum of all expenses)
+💰 Balance (Income − Expense)
+All updates are shown live without restarting the app.
+📈 Graph Visualization
+
+
+
+An integrated bar graph provides a visual summary of spending and income patterns.
+
+The chart displays total income vs. expense grouped by category.
+Every time you add or view transactions, the graph updates in real time.
+This helps identify where most of your money goes and how well you’re budgeting.
+🧾 Transaction Management
+
+
+
+Includes full CRUD (Create, Read, Update, Delete) support for financial records.
+When a transaction is deleted, the system:
+
+Automatically renumbers the transaction IDs for consistency.
+Ensures the AUTO_INCREMENT value in MySQL resets properly.
+Refreshes the display and recalculates totals instantly.
+🗄 MySQL Integration
+
+
+
+All user and transaction data are securely stored in a MySQL database, ensuring persistence between sessions.
+The application uses mysql.connector for direct database communication, supporting:
+
+User authentication and income tracking
+Category management
+Transaction recording with relational consistency
 🛠️ Tech Stack
 Component	Technology Used
 Frontend (GUI)	Tkinter (Python)
 Backend (Database)	MySQL
 Visualization	Matplotlib
 Language	Python 3.10+
-
-🗄️ Database Setup
-CREATE DATABASE IF NOT EXISTS budget_tracker;
-USE budget_tracker;
-
--- Create users table
-CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    monthly_income DECIMAL(10,2) DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create categories table
-CREATE TABLE IF NOT EXISTS categories (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) UNIQUE NOT NULL
-);
-
--- Create transactions table
-CREATE TABLE IF NOT EXISTS transactions (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
-    category_id INT,
-    amount DECIMAL(10,2),
-    type ENUM('Income', 'Expense'),
-    description VARCHAR(255),
-    date DATE,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
-);
-
--- Add default categories
-INSERT IGNORE INTO categories (name)
-VALUES ('Food'), ('Transport'), ('Rent'), ('Salary'), ('Entertainment'), ('Shopping');
 
 
 📁 Project Structure
@@ -64,3 +83,4 @@ Smart_Budget_Tracker/
 ├── dashboard.py         # Dashboard GUI with graphs
 ├── README.md            # Documentation
 └── requirements.txt     # (optional) Python dependencies
+
